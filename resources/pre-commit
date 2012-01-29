@@ -1,0 +1,23 @@
+#!/bin/sh
+
+if [ -z $DISABLE_SEMVER ]
+then
+	DISABLE_SEMVER=false
+fi
+
+CMD="grep '^(defproject [^ ]\+ \"[^\"]\+\"' | sed 's/^.*\"\([^\"]\+\)\"$/\1/'"
+
+OLD_VERSION=$(eval "git show HEAD:project.clj | $CMD")
+NEW_VERSION=$(eval "cat project.clj | $CMD")
+
+if [ $OLD_VERSION = $NEW_VERSION ]
+then
+	echo "WARNING: project.clj semantic version has not been updated!"
+	$DISABLE_SEMVER || echo "Please update your project.clj version before commiting. You can skip this warning by setting the environment variable DISABLE_SEMVER=true" && exit 1
+fi
+
+if [ ! -e "project.clj" ]
+then
+	echo "project.clj does not exist."
+	exit 1
+fi

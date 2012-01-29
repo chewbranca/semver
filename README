@@ -1,0 +1,26 @@
+# lein-semver
+
+This lein plugin is a little experiment with more active enforcement
+of [Semantic Version](http://semver.org/) with lein projects.
+
+Currently this plugin will add a git pre-commit hook to your project
+that will block you from committing anything new without also
+modifying the version in your project.clj.
+
+## Usage
+
+   git clone git://github.com/chewbranca/semver.git
+   lein install
+   lein plugin install lein-semver 1.0.0-SNAPSHOT
+
+Now switch to your project and run
+
+    lein semver
+
+This will initialize the semver git hook into your project.
+
+## License
+
+Copyright (C) 2012 Russell Branca
+
+Distributed under the Eclipse Public License, the same as Clojure.
